@@ -483,7 +483,6 @@ public class WifiEnterpriseConfig implements Parcelable {
      * with this configuration.  The framework takes care of installing the
      * key entry when the config is saved and removing the key entry when
      * the config is removed.
-
      * @param privateKey
      * @param clientCertificate
      * @throws IllegalArgumentException for an invalid key or certificate.
@@ -641,7 +640,9 @@ public class WifiEnterpriseConfig implements Parcelable {
     public String toString() {
         StringBuffer sb = new StringBuffer();
         for (String key : mFields.keySet()) {
-            sb.append(key).append(" ").append(mFields.get(key)).append("\n");
+            // Don't display password in toString().
+            String value = PASSWORD_KEY.equals(key) ? "<removed>" : mFields.get(key);
+            sb.append(key).append(" ").append(value).append("\n");
         }
         return sb.toString();
     }
